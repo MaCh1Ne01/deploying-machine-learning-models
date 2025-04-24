@@ -6,7 +6,7 @@ from pathlib import Path
 from setuptools import find_packages, setup
 
 # Package meta-data.
-NAME = 'tid-classification-model'
+NAME = 'test-classification-model-malc'
 DESCRIPTION = "Example classification model package from MaCh1NeT."
 URL = "https://github.com/MaCh1Ne01/deploying-machine-learning-models.git"
 EMAIL = "mluyoch01@gmail.com"
