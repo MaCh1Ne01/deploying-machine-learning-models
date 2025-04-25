@@ -30,19 +30,19 @@ fetch_data: &fetch_data
       ./scripts/fetch_kaggle_dataset.sh
 
 jobs:
-  section_07_test_app:
+  my_test_app:
     <<: *defaults
-    working_directory: ~/project/section-07-ci-and-publishing/house-prices-api
+    working_directory: ~/project/my-app-ci-and-publishing/survive-predict-api
     steps:
       - checkout:
           path: ~/project
       - *prepare_tox
       - run:
-          name: Runnning app tests
+          name: Runnning my app tests
           command: |
             tox
 
-  section_07_deploy_app_to_railway:
+  my_deploy_app_to_railway:
     <<: *defaults
     steps:
       - checkout:
@@ -54,11 +54,11 @@ jobs:
       - run:
           name: Deploy to Railway App (You must set RAILWAY_TOKEN env var)
           command: |
-            cd section-07-ci-and-publishing/house-prices-api && railway up --detach
+            cd my-app-ci-and-publishing/survive-predict-api && railway up --detach
 
-  section_07_test_and_upload_regression_model:
+  my_test_and_upload_classification_model:
     <<: *defaults
-    working_directory: ~/project/section-07-ci-and-publishing/model-package
+    working_directory: ~/project/my-app-ci-and-publishing/model-package
     steps:
       - checkout:
           path: ~/project
@@ -267,17 +267,17 @@ workflows:
   version: 2
   deploy_pipeline:
     jobs:
-      - section_07_test_app
-      - section_07_deploy_app_to_railway:
+      - my_test_app
+      - my_deploy_app_to_railway:
           requires:
-            - section_07_test_app
+            - my_test_app
           filters:
             branches:
               only:
                 - master
                 - demo
       # upload after git tags are created
-      - section_07_test_and_upload_regression_model:
+      - my_test_and_upload_classification_model:
           <<: *tags_only
 
       - section_08_deploy_app_container_via_railway:
